@@ -12,7 +12,6 @@ namespace Gorge.World;
 public class Part : WorldObject
 {
     public bool Anchored = false;
-    public Material Material;
     public Model Model;
     public enum PartType
     {
@@ -24,20 +23,15 @@ public class Part : WorldObject
         Name = "Part";
         this.type = type;
 
-        position ??= new Vector3(1, 1, 1);
-        rotation ??= Quaternion.Zero;
+        position ??= new Vector3(0, 0, 0);
+        rotation ??= Quaternion.Identity;
         scale ??= new Vector3(4, 1, 2);
 
-        Transform.Position = position.Value;
-        Transform.Rotation = rotation.Value;
-        Transform.Scale = scale.Value;
+        Transform.SetPosition(position.Value);
+        Transform.SetRotation(rotation.Value);
+        Transform.SetScale(scale.Value);
 
-        RegenerateModel();
-    }
-
-    protected override void OnTransformChanged()
-    {
-        base.OnTransformChanged();
+        Transform.ScaleChanged += t => RegenerateModel();
         RegenerateModel();
     }
 
@@ -46,7 +40,7 @@ public class Part : WorldObject
         switch (type)
         {
             case PartType.Brick:
-                Mesh mesh = Raylib.GenMeshCube(Transform.Scale.X, Transform.Scale.Y, Transform.Scale.Z);
+                Mesh mesh = Raylib.GenMeshCube(1, 1, 1);
                 unsafe
                 {
                     for (int i = 0; i < mesh.VertexCount * 2; i += 2)
@@ -55,7 +49,7 @@ public class Part : WorldObject
                         mesh.TexCoords[i + 1] *= Transform.Scale.Z; // V
                     }
                 }
-                Raylib.UploadMesh(ref mesh, true);
+                // Raylib.UploadMesh(ref mesh, false);
                 Model = Raylib.LoadModelFromMesh(mesh);
                 unsafe
                 {
@@ -70,6 +64,5 @@ public class Part : WorldObject
 
 
         Raylib.SetMaterialTexture(ref Model, 0, MaterialMapIndex.Albedo, ref texture);
-
     }
 }

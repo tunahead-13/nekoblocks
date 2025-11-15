@@ -33,14 +33,15 @@ public class PhysicsService : BaseService
         foreach (var body in world.RigidBodies)
         {
             // Find object from bindings
-            bodyIdBindings.TryGetValue(body, out var id);
+            if (!bodyIdBindings.TryGetValue(body, out var id)) continue;
             WorldObject? obj = workspace.Objects.Find(x => x.Id == id);
 
             if (obj != null && obj is Part part)
             {
-                part.Transform.Position = body.Position;
-                part.Transform.Rotation = body.Orientation;
+                part.Transform.SetPosition(body.Position);
+                part.Transform.SetRotation(body.Orientation);
                 body.MotionType = part.Anchored ? MotionType.Static : MotionType.Dynamic;
+                Log.LogDebug(part.Name);
             }
         }
     }

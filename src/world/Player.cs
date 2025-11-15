@@ -19,7 +19,7 @@ public class Player : WorldObject
             Position = new Vector3(-20, 8, 10),
             Target = new Vector3(0, 4, 0),
             Up = new Vector3(0, 1, 0),
-            FovY = 45.0f,
+            FovY = 80.0f,
             Projection = CameraProjection.Perspective
         };
 

@@ -1,6 +1,8 @@
 using System.Numerics;
+using System.Threading.Tasks;
 using Gorge.Core;
 using Gorge.World;
+using Microsoft.VisualBasic;
 
 namespace Gorge.Services;
 
@@ -14,12 +16,14 @@ public class WorkspaceService : BaseService
     Player? localPlayer;
 
     private PhysicsService? physics;
+    Part part;
+    Part baseplate;
     public override void Start()
     {
         base.Start();
         physics = ServiceManager.GetService<PhysicsService>();
 
-        var baseplate = new Part(Part.PartType.Brick, Vector3.Zero, Quaternion.Zero, new Vector3(16, 1, 16));
+        baseplate = new Part(Part.PartType.Brick, Vector3.Zero, Quaternion.Identity, new Vector3(16, 1, 16));
         baseplate.Name = "Baseplate";
         baseplate.Anchored = true;
         AddObject(baseplate);

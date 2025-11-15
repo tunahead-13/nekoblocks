@@ -33,15 +33,12 @@ public class RenderService : BaseService
             if (item.GetType() == typeof(Part))
             {
                 var part = (Part)item;
-                var position = part.Transform.Position;
-                var rotation = part.Transform.Rotation;
-                var scale = part.Transform.Scale;
 
                 switch (part.type)
                 {
                     case Part.PartType.Brick:
-                        Transform.QuaternionToAxisAngle(rotation, out var axis, out var angle);
-                        Raylib.DrawModelEx(part.Model, part.Transform.Position, axis, angle, part.Transform.Scale / 5, Color.White);
+                        Transform.QuaternionToAxisAngle(part.Transform.Rotation, out var axis, out var angle);
+                        Raylib.DrawModelEx(part.Model, part.Transform.Position, axis, angle, part.Transform.Scale, Color.White);
                         break;
                 }
             }

@@ -11,16 +11,5 @@ public class WorldObject
     public int Id;
     public string Name = "Unnamed Object";
 
-    private Transform _transform = new();
-    public Transform Transform
-    {
-        get { return _transform; }
-        set
-        {
-            _transform = value;
-            OnTransformChanged();
-        }
-    }
-
-    protected virtual void OnTransformChanged() { }
+    public Transform Transform = new();
 }
