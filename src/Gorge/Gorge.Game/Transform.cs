@@ -14,7 +14,13 @@ public class Transform
     public event Action<Transform>? RotationChanged;
     public event Action<Transform>? ScaleChanged;
 
-    public static void QuaternionToAxisAngle(Quaternion q, out Vector3 axis, out float angleDegs)
+    /// <summary>
+    /// Convert a Quaternion to Axis/Angle rotation
+    /// </summary>
+    /// <param name="q">Quaternion to convert</param>
+    /// <param name="axis">Axis</param>
+    /// <param name="angle">Angle in degrees</param>
+    public static void QuaternionToAxisAngle(Quaternion q, out Vector3 axis, out float angle)
     {
         var x = q.X;
         var y = q.Y;
@@ -25,7 +31,7 @@ public class Transform
         if (len == 0)
         {
             axis = new Vector3(1, 0, 0);
-            angleDegs = 0;
+            angle = 0;
             return;
         }
 
@@ -38,7 +44,7 @@ public class Transform
         }
 
         w = Math.Clamp(w, -1, 1);
-        angleDegs = 2f * (float)Math.Acos(w) * (180f / MathF.PI);
+        angle = 2f * (float)Math.Acos(w) * (180f / MathF.PI);
         var s = (float)Math.Sqrt(1 - w * w);
 
         if (s < 1e-8)
@@ -52,6 +58,12 @@ public class Transform
         return;
     }
 
+    /// <summary>
+    /// Set all 3 transform values
+    /// </summary>
+    /// <param name="position">Position</param>
+    /// <param name="rotation">Rotation as a Quaternion</param>
+    /// <param name="scale">Scale</param>
     public void Set(Vector3 position, Quaternion rotation, Vector3 scale)
     {
         if (Position != position)

@@ -1,15 +1,11 @@
-using System.Diagnostics;
-using System.Dynamic;
 using System.Numerics;
-using System.Reflection;
-using Gorge.World;
 using Gorge.Core;
 using Raylib_cs;
 using Gorge.Services;
 
-namespace Gorge.World;
+namespace Gorge.Game.Objects;
 
-public class Part : WorldObject
+public class Part : GameObject
 {
     public bool Anchored = false;
     public Model Model;
@@ -35,6 +31,9 @@ public class Part : WorldObject
         RegenerateModel();
     }
 
+    /// <summary>
+    /// Regenerate the Part's mesh, for example when the scale has been changed
+    /// </summary>
     public void RegenerateModel()
     {
         switch (type)

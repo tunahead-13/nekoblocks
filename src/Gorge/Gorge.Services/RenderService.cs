@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Numerics;
 using Gorge.Core;
-using Gorge.World;
+using Gorge.Game.Objects;
 using Raylib_cs;
 
 namespace Gorge.Services;
@@ -31,7 +31,10 @@ public class RenderService : BaseService
         Raylib.DrawGrid(128, 4);
         Raylib.BeginMode3D(player.Camera);
 
-        foreach (var item in workspace.Objects)
+        if (workspace.Skybox != null)
+            RenderSkybox(workspace.Skybox);
+
+        foreach (var item in workspace.Workspace.GetChildren(true))
         {
             switch (item.GetType())
             {
@@ -40,11 +43,6 @@ public class RenderService : BaseService
                     break;
             }
         }
-
-        /*
-        if (workspace.Skybox != null)
-            RenderSkybox(workspace.Skybox);
-        */
 
         Raylib.EndMode3D();
 

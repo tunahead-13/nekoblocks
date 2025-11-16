@@ -15,6 +15,7 @@ internal class Program
             Raylib.SetTraceLogCallback(ptr);
         }
         Raylib.SetConfigFlags(ConfigFlags.Msaa4xHint);
+        Raylib.SetConfigFlags(ConfigFlags.ResizableWindow);
         Raylib.InitWindow(800, 600, "Gorge Engine");
         Raylib.SetTargetFPS(60);
         Raylib.DisableCursor();

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Gorge.Core;
-using Gorge.World;
+using Gorge.Game;
+using Gorge.Game.Objects;
 using Jitter2;
 using Jitter2.Collision.Shapes;
 using Jitter2.Dynamics;
@@ -15,13 +16,12 @@ namespace Gorge.Services;
 public class PhysicsService : BaseService
 {
     readonly Jitter2.World world = new();
-    readonly WorkspaceService workspace = ServiceManager.GetService<WorkspaceService>();
+    WorkspaceService workspace = ServiceManager.GetService<WorkspaceService>();
     readonly Dictionary<RigidBody, int> bodyIdBindings = []; // Binds the rigidbodies with the object IDs
 
     public override void Start()
     {
         base.Start();
-
         world.SubstepCount = 4;
 
     }
@@ -29,7 +29,8 @@ public class PhysicsService : BaseService
     public override void Update()
     {
         base.Update();
-        if (workspace.Objects.Count == 0) return;
+        var workspaceObjects = workspace.Workspace.GetChildren(true);
+        if (workspaceObjects.Length == 0) return;
 
         world.Step(Raylib.GetFrameTime(), true);
 
@@ -37,7 +38,7 @@ public class PhysicsService : BaseService
         {
             // Find object from bindings
             if (!bodyIdBindings.TryGetValue(body, out var id)) continue;
-            WorldObject? obj = workspace.Objects.Find(x => x.Id == id);
+            GameObject? obj = Array.Find(workspaceObjects, x => x.Id == id);
 
             if (obj != null && obj is Part part)
             {

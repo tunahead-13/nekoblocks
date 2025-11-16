@@ -15,6 +15,7 @@ public static class ServiceManager
     {
         Log.Info("Initialising services");
         // Order matters here !!
+        RegisterService(new GameService());
         RegisterService(new ResourceService());
         RegisterService(new WorkspaceService());
         RegisterService(new PhysicsService());

@@ -3,7 +3,7 @@ using Gorge.Core;
 using Gorge.Services;
 using System.Numerics;
 
-namespace Gorge.World;
+namespace Gorge.Game.Objects;
 
 public class Skybox
 {
@@ -60,9 +60,11 @@ public class Skybox
         {
             Image img = resourceService.GetImage(filename);
             Texture2D cubemap = Raylib.LoadTextureCubemap(img, CubemapLayout.AutoDetect);
-            Raylib.SetMaterialTexture(ref model, 0, MaterialMapIndex.Albedo, ref cubemap);
+            Raylib.SetMaterialTexture(ref model, 0, MaterialMapIndex.Cubemap, ref cubemap);
             Raylib.UnloadImage(img);
         }
+
+        Log.Info($"Initialised ({filename})");
     }
 
     // Taken from raylib-cs/Examples/Models/SkyboxDemo.cs

@@ -1,9 +1,9 @@
 using Raylib_cs;
 using System.Numerics;
 
-namespace Gorge.World;
+namespace Gorge.Game.Objects;
 
-public class Player : WorldObject
+public class Player : GameObject
 {
     public Camera3D Camera;
     public Part[] bodyParts =
@@ -22,8 +22,6 @@ public class Player : WorldObject
             FovY = 80.0f,
             Projection = CameraProjection.Perspective
         };
-
-
     }
 
     public void Update()
