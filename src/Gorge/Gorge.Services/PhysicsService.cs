@@ -34,7 +34,7 @@ public class PhysicsService : BaseService
         var workspaceObjects = workspace.Workspace.GetChildren(true);
         if (workspaceObjects.Length == 0) return;
 
-        // TODO: Delta time doesn't seem to be calculated correctly here, when the FPS is uncapped physics is incredibly slow.
+        // TODO: Delta time acts strangely here, when the FPS is uncapped physics is incredibly slow.
         world.Step(Raylib.GetFrameTime(), true);
 
         foreach (var body in world.RigidBodies)
@@ -49,11 +49,8 @@ public class PhysicsService : BaseService
                 part.Transform.SetRotation(body.Orientation);
                 body.MotionType = part.Transform.Anchored ? MotionType.Static : MotionType.Dynamic;
 
-                if (part.RigidBody != null)
-                {
-                    // Mass = Density x Volume
-                    part.RigidBody.SetMassInertia(15 * (part.Transform.Scale.X * part.Transform.Scale.Y * part.Transform.Scale.Z));
-                }
+                // Mass = Density x Volume
+                part.RigidBody?.SetMassInertia(15 * (part.Transform.Scale.X * part.Transform.Scale.Y * part.Transform.Scale.Z));
             }
         }
     }

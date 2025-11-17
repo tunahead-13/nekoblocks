@@ -62,7 +62,7 @@ public class RenderService : BaseService
         {
             case Part.PartType.Brick:
                 Transform.QuaternionToAxisAngle(part.Transform.Rotation, out var axis, out var angle);
-                Raylib.DrawModelEx(part.Model, part.Transform.Position, axis, angle, part.Transform.Scale, Color.White);
+                Raylib.DrawModelEx(part.Model, part.Transform.Position, axis, angle, Vector3.One, Color.White);
                 break;
         }
     }

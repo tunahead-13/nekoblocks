@@ -56,15 +56,18 @@ public class ResourceService : BaseService
         return Raylib.LoadTextureFromImage(img);
     }
 
-    public unsafe Shader GetShader(string vsPath, string fsPath)
+    public unsafe Shader GetShader(string? vsPath = null, string? fsPath = null)
     {
-        var vs = GetResource(vsPath);
-        var fs = GetResource(fsPath);
+        byte[]? vs = vsPath != null ? GetResource(vsPath) : null;
+        byte[]? fs = fsPath != null ? GetResource(fsPath) : null;
 
-        fixed (byte* pVs = vs)
-        fixed (byte* pFs = fs)
+        fixed (byte* pVs = vs ?? [])
+        fixed (byte* pFs = fs ?? [])
         {
-            return Raylib.LoadShaderFromMemory((sbyte*)pVs, (sbyte*)pFs);
+            return Raylib.LoadShaderFromMemory(
+                (sbyte*)(vs != null ? pVs : null),
+                (sbyte*)(fs != null ? pFs : null)
+            );
         }
     }
 

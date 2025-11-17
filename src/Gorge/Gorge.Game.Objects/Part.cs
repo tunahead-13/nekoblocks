@@ -38,32 +38,31 @@ public class Part : GameObject
     /// </summary>
     public void RegenerateModel()
     {
+        var resourceService = ServiceManager.GetService<ResourceService>();
         switch (Type)
         {
             case PartType.Brick:
-                Mesh mesh = Raylib.GenMeshCube(1, 1, 1);
-                unsafe
-                {
-                    for (int i = 0; i < mesh.VertexCount * 2; i += 2)
-                    {
-                        mesh.TexCoords[i + 0] *= Transform.Scale.X * 128; // U
-                        mesh.TexCoords[i + 1] *= Transform.Scale.Z * 128; // V
-                    }
-                }
-                // Raylib.UploadMesh(ref mesh, false);
+                Mesh mesh = Raylib.GenMeshCube(Transform.Scale.X, Transform.Scale.Y, Transform.Scale.Z);
+                Raylib.UploadMesh(ref mesh, false);
                 Model = Raylib.LoadModelFromMesh(mesh);
-                unsafe
-                {
-                    int texCount = mesh.VertexCount * 2;
-                    for (int i = 0; i < texCount; i += 2) Log.Debug($"UV[{i / 2}]={mesh.TexCoords[i]},{mesh.TexCoords[i + 1]}");
-                }
                 break;
         }
-        byte[] studImg = ServiceManager.GetService<ResourceService>().GetResource("textures.stud.png");
+        byte[] studImg = resourceService.GetResource("textures.stud.png");
         Texture2D texture = Raylib.LoadTextureFromImage(Raylib.LoadImageFromMemory(".png", studImg));
-        Raylib.SetTextureWrap(texture, TextureWrap.Repeat);
-
-
+        Raylib.SetTextureFilter(texture, TextureFilter.Bilinear);
         Raylib.SetMaterialTexture(ref Model, 0, MaterialMapIndex.Albedo, ref texture);
+
+        float[] tiling =
+        [
+            Transform.Scale.X,
+            Transform.Scale.Z
+        ];
+
+        Shader surfaceShader = resourceService.GetShader(null, "shaders.surfaces.fs");
+        Raylib.SetShaderValue(surfaceShader, Raylib.GetShaderLocation(surfaceShader, "tiling"), tiling, ShaderUniformDataType.Vec2);
+        unsafe
+        {
+            Model.Materials[0].Shader = surfaceShader;
+        }
     }
 }
