@@ -1,8 +1,8 @@
 using System.Reflection;
-using Gorge.Core;
+using Nekoblocks.Core;
 using Raylib_cs;
 
-namespace Gorge.Services;
+namespace Nekoblocks.Services;
 
 /// <summary>
 /// Service to assist with getting resources from the assembly

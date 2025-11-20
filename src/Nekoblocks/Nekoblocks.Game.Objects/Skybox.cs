@@ -1,9 +1,9 @@
 using Raylib_cs;
-using Gorge.Core;
-using Gorge.Services;
+using Nekoblocks.Core;
+using Nekoblocks.Services;
 using System.Numerics;
 
-namespace Gorge.Game.Objects;
+namespace Nekoblocks.Game.Objects;
 
 public class Skybox
 {
@@ -50,7 +50,6 @@ public class Skybox
 
         if (useHdr)
         {
-
             panorama = resourceService.GetTexture(filename);
             Texture2D cubemap = GenTextureCubemap(shader, panorama, 720, PixelFormat.UncompressedR8G8B8A8);
             Raylib.SetMaterialTexture(ref model, 0, MaterialMapIndex.Cubemap, ref cubemap);

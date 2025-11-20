@@ -1,11 +1,11 @@
 <div align="center">
     <img src="/assets/logos/logo.svg" width="400"/>
-    <h3>Gorge Engine</h3>
-    <p>Open-sourced experimental ROBLOX clone</p>
+    <h3>Nekoblocks</h3>
+    <p>Open-sourced ROBLOX-like game engine</p>
 </div>
 
 # About
-Gorge Engine is an open source game engine built with [Raylib](https://github.com/raylib-cs/raylib-cs) in .NET. It aims to recreate the experience of classic ROBLOX during the late 2000s to early 2010s.
+Nekoblocks (formerly Gorge Engine) is an open source game engine built with [Raylib](https://github.com/raylib-cs/raylib-cs) in .NET. It aims to recreate the experience of classic ROBLOX during the late 2000s to early 2010s.
 
 # Roadmap
 - [ ] Core functionality
@@ -38,7 +38,7 @@ Before working on the project, please make sure you have the latest version of .
     ```
 2. Clone the repository
     ```
-    git clone https://github.com/olifurz/gorge-engine && cd gorge-engine
+    git clone https://github.com/olifurz/nekoblocks && cd nekoblocks
     ```
 3. Run the engine
     ```
@@ -51,7 +51,7 @@ Any contributions towards this engine are greatly appreciated, if you would like
 If you have a suggestion that would make the engine better, please fork the repo and create a pull request with your changes. You can also open an issue with the tag "enhancement".
 
 # License
-Gorge Engine is distributed under the GNU General Public License. See [LICENSE](/LICENSE) for more details.
+Nekoblocks is distributed under the GNU General Public License. See [LICENSE](/LICENSE) for more details.
 
 # Acknowledgements
 - [elkarlos](https://karlos.olifurz.com) - Logo concept

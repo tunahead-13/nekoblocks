@@ -1,8 +1,8 @@
-﻿using Gorge.Core;
+﻿using Nekoblocks.Core;
 using Raylib_cs;
 using System;
 
-namespace GorgeEngine;
+namespace Nekoblocks;
 
 internal class Program
 {
@@ -16,7 +16,7 @@ internal class Program
         }
         Raylib.SetConfigFlags(ConfigFlags.Msaa4xHint);
         Raylib.SetConfigFlags(ConfigFlags.ResizableWindow);
-        Raylib.InitWindow(800, 600, "Gorge Engine");
+        Raylib.InitWindow(800, 600, "Nekoblocks");
         Raylib.SetTargetFPS(60);
         Raylib.DisableCursor();
 

@@ -1,27 +1,27 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.Principal;
-using Gorge.Core;
-using Gorge.Services;
+using Nekoblocks.Core;
+using Nekoblocks.Services;
 
-namespace Gorge.Game;
+namespace Nekoblocks.Game;
 
 /// <summary>
 /// Root game object
 /// </summary>
 public class GameObject
 {
-    public int Id;
+    private readonly GameService gameService;
+    public int Id { get; internal set; }
     public string Name = "Unnamed Object";
     public GameObject? Parent { get; internal set; }
     public List<GameObject> Children { get; internal set; } = [];
 
-    /// <summary>
-    /// Get the parent GameObject
-    /// </summary>
-    public GameObject? GetParent()
+    public GameObject()
     {
-        return Parent;
+        gameService = ServiceManager.GetService<GameService>();
+
+        Id = GameService.GetUniqueId();
     }
 
     /// <summary>
@@ -39,6 +39,9 @@ public class GameObject
     /// <param name="obj">GameObject to set</param>
     public void SetParent(GameObject obj)
     {
+        if (Parent != null)
+            if (Parent.Children.Contains(this))
+                Parent.Children.Remove(this); // Remove from parent's children list
         Parent = obj;
         obj.AddChild(this);
     }
@@ -49,13 +52,20 @@ public class GameObject
     /// <param name="id">ID to search for</param>
     public void SetParent(int id)
     {
-        var obj = ServiceManager.GetService<WorkspaceService>().GetObject(id);
+        var obj = ServiceManager.GetService<GameService>().Root.GetChild(id);
         if (obj != null)
-        {
-            Parent = obj;
-            obj.AddChild(this);
-        }
+            SetParent(obj);
         else throw Log.Error($"{Name} tried to parent to invalid id ({id})");
+    }
+
+    /// <summary>
+    /// Get a child of the GameObject via ID
+    /// </summary>
+    /// <param name="id">ID to search for</param>
+    /// <returns></returns>
+    public GameObject? GetChild(int id)
+    {
+        return Children?.FirstOrDefault(x => x.Id == id);
     }
 
     /// <summary>
@@ -84,7 +94,6 @@ public class GameObject
         foreach (var child in gameObject.Children)
         {
             allChildren.Add(child);
-
             collectChildren(child, allChildren);
         }
     }

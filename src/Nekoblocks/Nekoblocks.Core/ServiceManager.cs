@@ -1,11 +1,10 @@
-using Gorge.Services;
+using Nekoblocks.Services;
 
-namespace Gorge.Core;
+namespace Nekoblocks.Core;
 
 /// <summary>
 /// Manager for starting, updating and stopping services.
-/// If you delete this, the engine dies.
-/// (don't kill the engine)
+/// If this breaks, the game's screwed
 /// </summary>
 public static class ServiceManager
 {

@@ -1,10 +1,10 @@
 using System.Numerics;
-using Gorge.Core;
+using Nekoblocks.Core;
 using Raylib_cs;
-using Gorge.Services;
+using Nekoblocks.Services;
 using Jitter2.Dynamics;
 
-namespace Gorge.Game.Objects;
+namespace Nekoblocks.Game.Objects;
 
 public class Part : GameObject
 {
@@ -16,10 +16,12 @@ public class Part : GameObject
     public PartType Type;
     public RigidBody? RigidBody;
     public Transform Transform = new();
+    public float Transparency = 0; // TODO: Only 1 and 0 is supported right now in render service
     public Part(PartType type = PartType.Brick, Vector3? position = null, Quaternion? rotation = null, Vector3? scale = null)
     {
         Name = "Part";
         Type = type;
+        SetParent(ServiceManager.GetService<WorkspaceService>().Workspace);
 
         position ??= new Vector3(0, 0, 0);
         rotation ??= Quaternion.Identity;
@@ -28,6 +30,8 @@ public class Part : GameObject
         Transform.SetPosition(position.Value);
         Transform.SetRotation(rotation.Value);
         Transform.SetScale(scale.Value);
+
+        ServiceManager.GetService<PhysicsService>().AddBody(this);
 
         Transform.ScaleChanged += t => RegenerateModel();
         RegenerateModel();
@@ -64,5 +68,7 @@ public class Part : GameObject
         {
             Model.Materials[0].Shader = surfaceShader;
         }
+
+        ServiceManager.GetService<PhysicsService>().RegenerateCollider(this);
     }
 }

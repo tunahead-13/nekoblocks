@@ -1,10 +1,11 @@
 using System.Diagnostics;
 using System.Numerics;
-using Gorge.Core;
-using Gorge.Game.Objects;
+using Nekoblocks.Core;
+using Nekoblocks.Game.Objects;
+using Nekoblocks.Game.Player;
 using Raylib_cs;
 
-namespace Gorge.Services;
+namespace Nekoblocks.Services;
 
 /// <summary>
 /// Service to manage rendering of all objects in the workspace
@@ -36,12 +37,15 @@ public class RenderService : BaseService
 
         foreach (var item in workspace.Workspace.GetChildren(true))
         {
-            switch (item.GetType())
+            switch (item)
             {
-                case var value when value == typeof(Part):
-                    RenderPart((Part)item);
+                case Part part when part.Transparency < 1:
+                    RenderPart(part);
+                    break;
+                default:
                     break;
             }
+
         }
 
         Raylib.EndMode3D();

@@ -1,9 +1,8 @@
 using System.Diagnostics;
 using System.Numerics;
 
-namespace Gorge.World;
+namespace Nekoblocks.World;
 
-// This should really be moved somewhere else
 public class Transform
 {
     public Vector3 Position { get; internal set; }

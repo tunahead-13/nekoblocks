@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>gorge_engine</RootNamespace>
+    <RootNamespace>nekoblocks</RootNamespace>
     <RuntimeIdentifiers>linux-x64;win-x64</RuntimeIdentifiers>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

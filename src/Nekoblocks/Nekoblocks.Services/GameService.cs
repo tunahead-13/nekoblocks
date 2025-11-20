@@ -1,0 +1,40 @@
+using Nekoblocks.Core;
+using Nekoblocks.Game;
+
+/// <summary>
+/// Manages the currently loaded game 
+/// </summary>
+public class GameService : BaseService
+{
+    // CS8618 occurs here & I really don't want to have to mark it as nullable.
+    // See TODO in BaseService.cs for more. If there isn't a warning then delete this
+    // cause then we probably finally fixed the problem (or your IDE is broken)
+#pragma warning disable CS8618
+    public GameObject Root { get; private set; }
+#pragma warning restore CS8618
+    private static int idCount = 0;
+    public override void Start()
+    {
+        base.Start();
+        Root = new GameObject();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
+
+    public override void Stop()
+    {
+        base.Stop();
+    }
+
+    /// <summary>
+    /// Get a unique ID for use with a GameObject
+    /// </summary>
+    /// <returns></returns>
+    public static int GetUniqueId()
+    {
+        return idCount++;
+    }
+}
