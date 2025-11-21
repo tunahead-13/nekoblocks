@@ -13,6 +13,7 @@ public class Player : Instance
 {
     public Camera3D Camera;
     private WorkspaceService workspaceService = ServiceManager.GetService<WorkspaceService>();
+    public Character Character = new();
     public Player()
     {
         Name = "Player";
@@ -25,6 +26,9 @@ public class Player : Instance
             FovY = 80.0f,
             Projection = CameraProjection.Perspective
         };
+        Character.Transform.SetPosition(0, 10, 7);
+        Character.Transform.Anchored = false;
+        Character.SetParent(this);
     }
     public void Update()
     {
